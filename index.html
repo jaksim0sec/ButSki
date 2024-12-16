@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="https://ifh.cc/g/69rynC.png" />
+    <meta charset="UTF-8" />
+    <title>꽁꽁 얼어붙은 한강 위에 종이비행기가</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        overflow: hidden;
+      }
+      #월드 {
+        width: 95vw;
+        height: 90vh;
+        border: none;
+        border-radius: 15px;
+        box-shadow: inset -10px -10px 5px #00000050,
+          inset 10px 10px 5px #ffffff50;
+        background: linear-gradient(135deg, #aca1ff, #9283ff, #7f6efd);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #플레이어 {
+        width: 22px;
+        height: 22px;
+        border: none;
+        border-radius: 8px;
+        z-index: 1;
+        background: linear-gradient(
+          135deg,
+          #fdd8aa,
+          #ffd07e,
+          #fcbf57,
+          #ffab44,
+          #ffab44,
+          #ff9830,
+          #ff8000
+        );
+        transition: all 0.1s ease;
+        box-shadow: inset -2px -2px 2px #da891f90,
+          inset -22px -22px 2px #ffffff50, 5px 5px 3px #5c4dba50;
+      }
+
+      #fakePlayer {
+        width: 15px;
+        height: 15px;
+        border: none;
+        border-radius: 5px;
+        background: linear-gradient(
+          135deg,
+          #fdd8aa,
+          #ffd07e,
+          #fcbf57,
+          #ffab44,
+          #ffab44,
+          #ff9830,
+          #ff8000
+        );
+        transition: all 0.1s ease;
+        box-shadow: inset -2px -2px 2px #da891f90,
+          inset -22px -22px 2px #ffffff50;
+      }
+
+      .오브젝트 {
+        position: absolute;
+      }
+    </style>
+    <!--기본설정적 스타일-->
+    <style>
+      progress {
+        width: 150px;
+        height: 10px;
+        border-radius: 10px;
+        border: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        appearance: none;
+      }
+
+      progress::-webkit-progress-bar {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+      }
+
+      progress::-webkit-progress-value {
+        transition: all 0.5s ease;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+      }
+
+      progress::-moz-progress-bar {
+        transition: all 0.5s ease;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+      }
+      #window {
+        position: absolute;
+        z-index: 10;
+        width: 400px;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 5px #00000030;
+        display: flexbox;
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+        align-content: center;
+        transition: height 0.5s ease;
+        background-color: #25222180;
+        color: #fff2e1;
+        backdrop-filter: blur(5px);
+      }
+
+      .window-holder {
+        position: absolute;
+        z-index: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #00000080;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        backdrop-filter: blur(2px);
+      }
+
+      #close {
+        transition: all 0.5s ease;
+        display: none;
+      }
+      #window-cont {
+        width: 390px;
+      }
+
+      button {
+        border-radius: 20px;
+        background-color: #00000060;
+        color: #ffffffcc;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        padding: 8px 16px;
+        border: none;
+        height: 46px;
+        width: 200px;
+        font-size: 16px;
+        cursor: pointer;
+        opacity: 0;
+        animation: showB 0.5s ease-in-out;
+      }
+
+      @keyframes showB {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      button:hover {
+        background-color: #ffffff10;
+        transform: translateY(-3px) scale(1.02);
+        filter: brightness(1.5);
+      }
+
+      button:active {
+        transform: scale(0.95);
+      }
+
+      #name {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        font-weight: bold;
+        color: #ffffff60;
+      }
+      .highlight {
+        font-weight: bold;
+      }
+
+      .bomb {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #ffe8c9;
+        border-radius: 50%;
+        box-shadow: 4px 4px 4px #554698, inset -3px -3px 5px #da891f90;
+        z-index: 0;
+        animation: 폭탄생성 0.8s ease-out;
+      }
+      @keyframes 폭탄생성 {
+        0% {
+          transform: translate(0, 0) scale(1.1);
+        }
+        28% {
+          transform: translate(0, -15px) scale(1.1);
+        }
+        65% {
+          transform: translate(0, 0) scale(1);
+        }
+        85% {
+          filter: brightness(1.5);
+        }
+        100% {
+          filter: brightness(1);
+        }
+      }
+
+      @keyframes 폭발 {
+        0% {
+          background-color: #ff4141;
+          transform: scale(1);
+          opacity: 1;
+          box-shadow: 0 0 4px 2px rgba(255, 85, 85, 0.7),
+            0 0 6px 3px rgba(255, 140, 0, 0.5);
+        }
+        30% {
+          background-color: #ff4141;
+          transform: scale(2);
+          opacity: 0.8;
+          box-shadow: 0 0 4px 2px rgba(255, 85, 85, 0.8),
+            0 0 5px 3px rgba(255, 140, 0, 0.4);
+        }
+        50% {
+          background-color: #ff6141;
+          transform: scale(4);
+          opacity: 0.6;
+          box-shadow: 0 0 6px 3px rgba(255, 120, 120, 0.8),
+            0 0 5px 4px rgba(255, 85, 85, 0.5);
+        }
+        80% {
+          background-color: #ff6141;
+          transform: scale(6);
+          opacity: 0.4;
+          box-shadow: 0 0 8px 4px rgba(255, 85, 85, 0.8),
+            0 0 5px 4px rgba(255, 140, 0, 0.6);
+        }
+        100% {
+          background-color: #ff6141;
+          transform: scale(12);
+          opacity: 0;
+          box-shadow: 0 0 8px 4px rgba(255, 85, 85, 0.8);
+        }
+      }
+
+      @keyframes 개쩖폭발 {
+        0% {
+          background-color: rgba(255, 85, 85, 1);
+          transform: scale(1);
+          opacity: 1;
+          box-shadow: 0 0 4px 2px rgba(255, 85, 85, 0.7),
+            0 0 6px 3px rgba(255, 140, 0, 0.5);
+        }
+        30% {
+          background-color: rgba(255, 105, 105, 1);
+          transform: scale(30);
+          border-radius: 10px;
+          opacity: 0.8;
+          box-shadow: 0 0 4px 2px rgba(255, 85, 85, 0.8),
+            0 0 6px 3px rgba(255, 140, 0, 0.4);
+        }
+        50% {
+          background-color: rgba(255, 120, 120, 1);
+          transform: scale(10);
+          opacity: 0.6;
+          box-shadow: 0 0 6px 3px rgba(255, 120, 120, 0.8),
+            0 0 8px 4px rgba(255, 85, 85, 0.5);
+        }
+        80% {
+          background-color: rgba(255, 85, 85, 1);
+          transform: scale(50);
+          opacity: 0.4;
+          box-shadow: 0 0 8px 4px rgba(255, 85, 85, 0.8),
+            0 0 10px 5px rgba(255, 140, 0, 0.6);
+        }
+        100% {
+          background-color: rgba(255, 85, 85, 0);
+          transform: scale(100);
+          opacity: 0;
+          box-shadow: 0 0 10px 5px rgba(255, 85, 85, 0.8);
+        }
+      }
+
+      .separator {
+        margin: 20px 0;
+      }
+
+      .separator hr {
+        width: 30%;
+        height: 2px;
+        background-color: #ffffff50;
+        border: none;
+      }
+
+      .highlight {
+        color: #ffca85;
+      }
+
+      .abilities-section {
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      .skill-card {
+        margin: 5px;
+        padding: 5px;
+        background-color: #3f3a3999;
+        color: white;
+        border-radius: 5px;
+        text-align: center;
+        transition: all 0.5s ease;
+        font-size: 15px;
+        border: 5px solid #ffffff00;
+        box-shadow: 0px 0px 0px #00000000;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .skill-card:hover {
+        transform: scale(1.04) translateY(-8px);
+        filter: brightness(1.3);
+        border: 5px solid #635959;
+        box-sizing: border-box;
+        box-shadow: 0px 5px 1px #ffffff30;
+      }
+
+      .skill-card:active {
+        transform: scale(0.9) translateY(5px);
+        filter: brightness(0.9);
+      }
+    </style>
+    <style>
+      .적 {
+        z-index: 5;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0px 6px 13px 6px;
+        border-color: transparent transparent #e7e5fa transparent;
+        animation: show 1s ease-in-out;
+        transform-origin: center center;
+        transition: all 0.15s ease, transform 3s ease-out;
+      }
+
+      @keyframes show {
+        0% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes stageSet {
+        50% {
+          transform: scale(1) translateY(-15px);
+        }
+
+        100% {
+        }
+      }
+      @keyframes 적죽음 {
+        0% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+          filter: blur(0);
+        }
+        30% {
+          transform: scale(1.2) rotate(45deg);
+          opacity: 1;
+          filter: blur(2px);
+        }
+        50% {
+          transform: scale(1.5) rotate(90deg);
+          opacity: 0.8;
+          filter: blur(4px);
+        }
+        70% {
+          transform: scale(1) rotate(135deg);
+          opacity: 0.5;
+          filter: blur(6px);
+        }
+        100% {
+          transform: scale(0) rotate(180deg);
+          opacity: 0;
+          filter: blur(10px);
+        }
+      }
+      #stage {
+        margin: 8px 12px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        transition: all 1s ease;
+        position: absolute;
+        width: 200px;
+        z-index: 100;
+      }
+
+      #score {
+        transition: all 1s ease;
+        margin: 135px 12px;
+        color: #ffffff80;
+        font-size: 30px;
+        font-weight: bold;
+        position: absolute;
+        z-index: 100;
+      }
+      @keyframes stageSet {
+        50% {
+          transform: scale(1) translateY(-15px);
+        }
+
+        100% {
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="월드">
+      <div id="name" onclick="window.location.href='park0sec.vercel.app'">
+        @샛별코딩동아리회장
+      </div>
+      <div id="플레이어" class="오브젝트"></div>
+      <div id="stage" class="object" style="z-index: 1">
+        #고라니는 귀엽습니다
+      </div>
+      <progress
+        id="score"
+        class="object"
+        style="z-index: 1"
+        value="3"
+        max="3"
+      ></progress>
+    </div>
+    <style>
+      @keyframes loaderA {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      #loader {
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        animation: loaderA 2s ease forwards;
+        position: absolute;
+        pointer-events: none;
+      }
+    </style>
+    <div id="loader"></div>
+    <!--기본함수-->
+    <script>
+      function HTML(name) {
+        return document.querySelector(name);
+      }
+      function 랜덤(min, max) {
+        const time = Date.now();
+        let seed = time ^ (time >> 3);
+        seed = (seed * 9301 + 49297) % 233280;
+        const random = (seed / 233280) * Math.sin(seed);
+        return Math.floor((Math.abs(random) % 1) * (max - min + 1)) + min;
+      }
+
+      function 토글(문자, 글자) {
+        let 대상 = 문자;
+        if (대상.includes(글자)) {
+          while (대상.includes(글자)) {
+            대상 = 대상.replace(글자, '');
+          }
+        } else {
+          대상 += 글자;
+        }
+        return 대상;
+      }
+
+      function 터치(대상일, 대상이) {
+        const 대상1 = HTML(대상일).getBoundingClientRect();
+        const 대상2 = HTML(대상이).getBoundingClientRect();
+
+        const 대상1중심 = {
+          x: 대상1.left + 대상1.width / 2,
+          y: 대상1.top + 대상1.height / 2,
+        };
+        const 대상2중심 = {
+          x: 대상2.left + 대상2.width / 2,
+          y: 대상2.top + 대상2.height / 2,
+        };
+
+        const 거리 = {
+          x: Math.abs(대상1중심.x - 대상2중심.x),
+          y: Math.abs(대상1중심.y - 대상2중심.y),
+        };
+
+        const 허용거리 = {
+          x: (대상1.width + 대상2.width) / 2,
+          y: (대상1.height + 대상2.height) / 2,
+        };
+
+        return 거리.x <= 허용거리.x && 거리.y <= 허용거리.y;
+      }
+      function 이동(대상, dx, dy, 패딩) {
+        const 요소기록 = HTML(대상);
+        const world = HTML('#월드');
+        const padding = 18;
+
+        if (!요소기록) return;
+
+        const currentX = parseFloat(요소기록.style.left || 0);
+        const currentY = parseFloat(요소기록.style.bottom || 0);
+        const newX = Math.max(
+          padding,
+          Math.min(
+            world.offsetWidth - 요소기록.offsetWidth - padding,
+            currentX + dx
+          )
+        );
+        const newY = Math.max(
+          padding,
+          Math.min(
+            world.offsetHeight - 요소기록.offsetHeight - padding,
+            currentY + dy
+          )
+        );
+
+        순간이동(대상, newX, newY);
+      }
+
+      function 순간이동(대상, x, y) {
+        const 대상요소기록 = HTML(대상);
+        const 요소기록위치 = 대상요소기록.style;
+        요소기록위치.left = x + 'px';
+        요소기록위치.bottom = y + 'px';
+        let 새로운Left = x;
+        let 새로운Bottom = y;
+        if (요소기록[대상]) {
+          요소기록[대상].x = 새로운Left;
+          요소기록[대상].y = 새로운Bottom;
+        } else {
+          요소기록[대상] = {
+            x: 새로운Left,
+            y: 새로운Bottom,
+            name: 대상,
+            alive: true,
+            type: 'norm',
+            deg: 0,
+          };
+        }
+      }
+
+      function 방향(대상, 목표) {
+        const 대상요소기록 = HTML(대상).getBoundingClientRect();
+        const 목표요소기록 = HTML(목표).getBoundingClientRect();
+        const 대상중심 = {
+          x: 대상요소기록.left + 대상요소기록.width / 2,
+          y: 대상요소기록.bottom + 대상요소기록.height / 2,
+        };
+        const 목표중심 = {
+          x: 목표요소기록.left + 목표요소기록.width / 2,
+          y: 목표요소기록.bottom + 목표요소기록.height / 2,
+        };
+        const dx = 목표중심.x - 대상중심.x;
+        const dy = 대상중심.y - 목표중심.y;
+        let angle = Math.atan2(dx, dy) * (180 / Math.PI);
+        return angle >= 0 ? angle : 360 + angle;
+      }
+
+      function 방향이동(대상, 각도, 크기) {
+        let 패딩 = 0;
+        const 대상요소기록 = HTML(대상);
+        const 대상위치 = 대상요소기록.getBoundingClientRect();
+        const 대상중심 = {
+          x: 대상위치.left + 대상위치.width / 2,
+          y: 대상위치.bottom,
+        };
+        const radian = 각도 * (Math.PI / 180);
+        const 이동량 = {
+          x: Math.sin(radian) * 크기,
+          y: Math.cos(radian) * 크기,
+        };
+        이동(대상, 이동량.x, 이동량.y, 패딩);
+      }
+
+      function 거리(대상1, 대상2) {
+        const 대상1위치 = HTML(대상1).getBoundingClientRect();
+        const 대상2위치 = HTML(대상2).getBoundingClientRect();
+        const 대상1중심 = {
+          x: 대상1위치.left + 대상1위치.width / 2,
+          y: 대상1위치.bottom + 대상1위치.height / 2,
+        };
+        const 대상2중심 = {
+          x: 대상2위치.left + 대상2위치.width / 2,
+          y: 대상2위치.bottom + 대상2위치.height / 2,
+        };
+        const dx = 대상2중심.x - 대상1중심.x;
+        const dy = 대상2중심.y - 대상1중심.y;
+        return Math.sqrt(dx * dx + dy * dy);
+      }
+
+      function 회전(directive, angle) {
+        const target = document.querySelector(directive);
+
+        if (!target) {
+          console.error('대상을 찾을 수 없습니다:', directive);
+          return;
+        }
+        const existingTransform = target.style.transform || '';
+        const currentRotation = existingTransform.match(
+          /rotate\((-?\d+\.?\d*)deg\)/
+        );
+        let currentAngle = currentRotation ? parseFloat(currentRotation[1]) : 0;
+        const newAngle = currentAngle + angle;
+        target.style.transform = `${existingTransform.replace(
+          /rotate\(-?\d+\.?\d*deg\)/,
+          ''
+        )} rotate(${newAngle}deg)`;
+        target.style.transformOrigin = 'center';
+      }
+    </script>
+    <!--폭발판정-->
+    <script>
+      let $admin = false;
+      let 폭탄개수 = 0;
+      function 폭탄배치(x, y) {
+        폭탄개수++;
+        const bomb = document.createElement('div');
+        bomb.classList.add('bomb');
+        bomb.id = `b${폭탄개수}`;
+        bomb.style.left = `${요소기록['#플레이어'].x + 5}px`;
+        bomb.style.bottom = `${요소기록['#플레이어'].y + 5}px`;
+        HTML('#월드').appendChild(bomb);
+
+        setTimeout(() => {
+          폭발(x + 25, y + 25, bomb.id);
+        }, 1000);
+      }
+      function 폭발(x, y, 대상이름) {
+        const 대상 = HTML(`#${대상이름}`);
+        if (!대상) {
+          console.error(`대상 ${대상이름}을(를) 찾을 수 없습니다.`);
+          return; //이유는 모르겠는데 자꾸 null 됨
+        }
+        대상.style.animation = `${
+          $admin ? '개쩖폭발' : '폭발'
+        } 0.8s ease-out forwards`;
+        const 폭발확인 = setInterval(() => {
+          const 폭발범위 = 대상.getBoundingClientRect();
+          for (const key in 요소기록) {
+            const 적군요소기록 = 요소기록[key];
+            if (!적군요소기록.name.includes('플레이어')) {
+              const 적군 = HTML(적군요소기록.name);
+              if (!적군) continue;
+              if (터치('#' + 대상이름, 적군요소기록.name)) {
+                ////console.log(`적군 ${적군요소기록.name}이(가) 폭발로 제거됨.`);
+                요소기록[key].alive = false; // html 은 효과 적용해야해서 조금 있다가 지워야함 ㅇㅇ
+                적군.style.animation = '적죽음 0.5s ease';
+                setTimeout(() => {
+                  적군.remove();
+                  delete 요소기록[key];
+                  충돌중복방지 = true;
+                }, 495);
+              }
+            }
+          }
+        }, 50);
+
+        setTimeout(() => {
+          clearInterval(폭발확인);
+          대상.remove();
+        }, 795);
+      }
+    </script>
+    <!--입력관리-->
+    <script>
+      //let 입력인터버 = {};
+      let 입력 = [];
+      let 플레이어속도 = 15;
+      let 인터버 = null;
+      let 이동값 = { x: 0, y: 0 };
+      let 폭탄여부 = true;
+      let 요소기록 = { '#플레이어': { x: 0, y: 0, name: '플레이어' } };
+      //let 인터버주기 = 1000;
+      document.addEventListener('keydown', (e) => {
+        const 키 = e.key;
+        //if(!Object.keys(입력인터버).includes(키)){입력인버터[키] = setInterval(()=>{})}
+        if (!입력.includes(키)) {
+          입력.push(키);
+        }
+        if (인터버 == null) {
+          인터버 = setInterval(() => {
+            ////console.log('dd')
+            이동값.x = 0;
+            이동값.y = 0;
+            if (입력.includes('a')) {
+              이동값.x -= 플레이어속도;
+            }
+            if (입력.includes('d')) {
+              이동값.x += 플레이어속도;
+            }
+            if (입력.includes('w')) {
+              이동값.y += 플레이어속도;
+            }
+            if (입력.includes('s')) {
+              이동값.y -= 플레이어속도;
+            }
+            if (
+              (입력.includes('q') || 입력.includes(' ')) &&
+              스킬.includes('bomb')
+            ) {
+              if (폭탄여부) {
+                폭탄여부 = false;
+                const 위 = HTML('#플레이어').getBoundingClientRect();
+                폭탄배치(위.left, 위.bottom);
+                setTimeout(() => {
+                  폭탄여부 = true;
+                }, 800);
+              }
+            }
+            이동('#플레이어', 이동값.x, 이동값.y, 10);
+            //console.log('ddf')
+          }, 50);
+        }
+      });
+      document.addEventListener('keyup', (e) => {
+        const 키 = e.key;
+        const 인덱스 = 입력.indexOf(키);
+        if (인덱스 > -1) {
+          입력.splice(인덱스, 1);
+        }
+        //console.log(인덱스)
+        if (입력.length == 0) {
+          clearInterval(인터버);
+          인터버 = null;
+        }
+      });
+    </script>
+    <!--부착형-->
+    <script>
+      async function textEffect(name, content, speed) {
+        const element = HTML(name);
+        if (!element) {
+          console.error(`${name}을 찾을 수 없습니다.`);
+          return;
+        }
+
+        let processedContent = '';
+        let index = 0;
+
+        while (index < content.length) {
+          const char = content[index];
+
+          if (char === '<') {
+            processedContent += char;
+            index++;
+            while (content[index] !== '>' && index < content.length) {
+              processedContent += content[index];
+              index++;
+            }
+            processedContent += '>';
+          } else {
+            processedContent += char;
+          }
+
+          element.innerHTML = processedContent + '●'; //겁나 열심히 만든 GPT 느낌 텍스트
+          if (content[index] !== ' ') {
+            await new Promise((resolve) => setTimeout(resolve, speed));
+          }
+
+          index++;
+        }
+        element.innerHTML = processedContent;
+      }
+
+      async function 알림(title, content, act, work) {
+        const windowHolder = document.createElement('div');
+        windowHolder.classList.add('window-holder');
+
+        const windowContent = document.createElement('div');
+        windowContent.id = 'window';
+
+        const centerContent = `
+          <center>
+          <div style="font-size:20px;font-weight:bold">${title}</div>
+          <div style="margin:20px;"><hr style="width: 60%; height: 2px; background-color: #FFFFFF50; border: none;"></div>
+          <p id="window-cont"></p>
+          <div style="height:10px;"></div>
+          <button id="close" onclick="${work} setTimeout(()=>{HTML('.window-holder').remove();},100)">${act}</button>
+          </center>
+      `;
+
+        windowContent.innerHTML = centerContent;
+        windowHolder.appendChild(windowContent);
+        document.body.appendChild(windowHolder);
+        await textEffect('#window-cont', content, 14);
+
+        const closeButton = document.querySelector('#close');
+        closeButton.style.opacity = 0;
+        closeButton.style.display = 'block';
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        closeButton.style.opacity = 1;
+      }
+    </script>
+    <!--기본설정-->
+    <script>
+      let 스킬 = '';
+      function 기본설정() {
+        const 월드 = HTML('#월드');
+        const 플 = HTML('#플레이어');
+        const 월실 = 월드.getBoundingClientRect();
+        const X = 월실.width / 2;
+        const Y = 월실.height / 2;
+        console.log(X, Y);
+        순간이동('#플레이어', X + 10, Y + 10);
+      }
+      기본설정();
+      알림(
+        '종이비행기 피하기 게임',
+        `<div>
+    당신이 한강빙판에서 <span class="highlight">스케이트</span>를 타고 있는데,
+  </div>
+  <div>
+    갑자기 <span class="highlight">종이비행기</span>들이 날아와 당신을 괴롭힙니다!
+  </div>
+  
+  <div class="separator">
+    <hr>
+  </div>
+  
+  <div>
+    <span class="highlight">A, S, D, W</span> 키로 <span style = "width:15px;height:15px; display:inline-block;"id = "fakePlayer"></span> 를 이동하며
+    <span class = "적" style = "margin-top:5px; "></span>⠀⠀들을 피해보세요!
+  </div>
+  
+  <div>
+    체력은 <span class="highlight">3점</span>에서 <span class = "적" style = "margin-top:5px; "></span>⠀⠀에 닿을 때마다 1점씩 내려갑니다.
+  </div>
+  
+  <div>
+    체력이 <span class = "highlight">0점</span>이 되면 사망합니다.
+  </div>
+  
+  <div>
+    <span class = "highlight">종이비행기</span>들로부터 최대한 오래 살아남아보세요!
+  </div>
+  
+  <div class="separator">
+    <hr>
+  </div>
+  
+  <div class="abilities-section">
+    <span class="section-title">▶능력선택◀</span>
+    <div style = "font-size:11px;margin-bottom:10px; margin-top : 2px;">
+        (<span class="highlight">여러개</span>도 선택 가능해요! 스킬개수 만큼의 <span class = "highlight">점수감점</span> 조심하세요!)
+    </div>
+  
+    <div class="skill-cards">
+      <div class="skill-card" id="skill-card1" onclick='스킬 = 토글(스킬,"bomb,"); HTML("#skill-card1").innerHTML = 토글(HTML("#skill-card1").innerHTML, "←선택됨")'><span class="highlight">스페이스키</span>를 눌러 1초 <span class="highlight">미니시한폭탄</span>을 설치</div>
+  <div class="skill-card" id="skill-card2" onclick='스킬 = 토글(스킬,"stren,"); HTML("#skill-card2").innerHTML = 토글(HTML("#skill-card2").innerHTML, "←선택됨")'>체력이 <span class="highlight">2</span>증가, 속도가 <span class="highlight">50%</span>증가</div>
+  <div class="skill-card" id="skill-card3" onclick='스킬 = 토글(스킬,"lower,"); HTML("#skill-card3").innerHTML = 토글(HTML("#skill-card3").innerHTML, "←선택됨")'>종이비행기의 속도 <span class="highlight">15%</span>증가, 개수 <span class="highlight">20%</span>감소</div>
+  
+    </div>
+  </div>
+  
+              `,
+        '시작하기',
+        '시작();'
+      );
+    </script>
+    <!--시스템-->
+    <script>
+      function 시작() {
+        if (스킬.includes('stren')) {
+          플레이어속도 *= 1.5;
+        }
+        HTML('#score').style.margin = '70px 12px';
+        HTML('#score').max = 5;
+        HTML('#score').value = 5;
+        체력 = 5;
+        관리();
+      }
+    </script>
+    <!--게임-->
+    <script>
+      function 시간포멧() {
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+        return `${day}${hours}${minutes}`;
+      }
+
+      function 숫자암호화(input) {
+        const map = {
+          1: 'A',
+          2: 'B',
+          3: 'C',
+          4: 'D',
+          5: 'E',
+          6: 'F',
+          7: 'G',
+          8: 'H',
+          9: 'I',
+          0: 'J',
+        };
+
+        return input.replace(/[0-9]/g, (match) => map[match]);
+      }
+
+      function 코드() {
+        let result = 'Z1' + 숫자암호화(String(최종점수));
+        result += '2';
+        result += 숫자암호화(시간포멧());
+        result += $admin ? 'RRM' : '';
+        return result;
+      }
+      let 적카운터 = 0;
+      let 레벨 = 1;
+      function 적군생성(num) {
+        const player = HTML('#플레이어');
+        const playerRect = player.getBoundingClientRect();
+        const world = HTML('#월드');
+        const worldRect = world.getBoundingClientRect();
+        const playerX = playerRect.left + playerRect.width / 2;
+        const playerY = playerRect.top + playerRect.height / 2;
+        const minDistance = 200;
+        const padding = 30;
+
+        for (let i = 0; i < num; i++) {
+          let randomX, randomY, distance;
+
+          do {
+            randomX =
+              Math.floor(Math.random() * (worldRect.width - 2 * padding)) +
+              padding;
+            randomY =
+              Math.floor(Math.random() * (worldRect.height - 2 * padding)) +
+              padding;
+
+            distance = Math.sqrt(
+              Math.pow(randomX - playerX, 2) + Math.pow(randomY - playerY, 2)
+            );
+          } while (distance < minDistance);
+
+          적카운터++;
+          const 적군 = document.createElement('div');
+          적군.classList.add('적');
+          적군.id = `적${적카운터}`;
+          적군.innerHTML = `<div class="shadow"></div>`;
+          HTML('#월드').appendChild(적군);
+
+          적군.style.bottom = `${randomY}px`;
+          적군.style.left = `${randomX}px`;
+
+          요소기록[`#적${적카운터}`] = {
+            name: `#적${적카운터}`,
+            x: randomX,
+            y: randomY,
+            alive: true,
+            type: 'norm',
+            deg: Math.floor(Math.random() * 180) + 1,
+          };
+
+          if (랜덤(20, 40) > 40 - 레벨 * 6) {
+            HTML(`#적${적카운터}`).style.border = 'none';
+            HTML(`#적${적카운터}`).style.width = '12px';
+            HTML(`#적${적카운터}`).style.height = '12px';
+            HTML(`#적${적카운터}`).style.borderRadius = '3px';
+            HTML(`#적${적카운터}`).style.backgroundColor = 'black';
+            요소기록[`#적${적카운터}`].type = 'spec';
+          }
+        }
+      }
+      let 체력 = 3;
+      async function 관리() {
+        for (let i = 0; i < 30; i++) {
+          setTimeout(() => {
+            HTML('#stage').innerHTML = 'Stage ' + 레벨;
+            HTML('#stage').style.animation = 'stageSet 0.8s ease';
+            HTML('#월드').style.filter = `contrast(${1 + (레벨 - 1) * 0.1})`;
+            setTimeout(() => {
+              HTML('#stage').style.animation = '';
+            }, 800);
+            //console.log(레벨)
+            let 적군생성량 = 5 + Math.round(레벨 * 1.5);
+            if (스킬.includes('lower')) {
+              적군생성량 = Math.round((적군생성량 *= 8 / 10));
+            }
+            적군생성(적군생성량);
+            웨이브 = setInterval(() => {
+              //console.log(요소기록);
+              if (체력 <= 0) {
+                //게임오버();
+                clearInterval(웨이브);
+              }
+              적군이동();
+            }, 150);
+            setTimeout(() => {
+              clearInterval(웨이브);
+            }, 14900);
+            레벨++;
+          }, 15000 * i);
+        }
+      }
+      function 게임오버() {
+        HTML('#월드').style.filter = ``;
+        let count = 0;
+        for (let char of 스킬) {
+          if (char === ',') {
+            count++;
+          }
+        }
+        최종점수 = 레벨 - 1;
+        최종점수 -= count;
+        if (최종점수 < 0) {
+          최종점수 = 0;
+        }
+        알림(
+          '게임오버',
+          `
+    사망하였습니다 😓
+    <div style = "margin:20px;"><hr style="width: 30%; height: 2px; background-color: #FFFFFF50; border: none;">
+  </div>
+    🏆점수 • <span class = "highlight">${최종점수}</span>${
+            $admin ? ' (관리자모드)' : ''
+          }
+    <div></div>
+    📜결과코드 • <span class = "highlight">${코드()}</span>
+    <div></div><div style = "font-size:12px">(옆에 배치된 포스트잇에 이 코드를 적고 보상을 받으러 가보세요!)</div>
+    `,
+          '다시플레이',
+          '/*location.reload()*/window.alert(`동아리 부원에게 요청해주세요! 플레이 횟수를 맞추기 위함입니다!`);'
+        );
+        HTML('#월드').style.filter = ``;
+      }
+    </script>
+    <!--적군이동알고리즘-->
+    <script>
+      let 충돌중복방지 = true;
+      async function 적군이동() {
+        const player = HTML('#플레이어');
+        const playerRect = player.getBoundingClientRect();
+        const playerX = playerRect.left + playerRect.width / 2;
+        const playerY = playerRect.bottom + playerRect.height / 2;
+
+        for (const key in 요소기록) {
+          const 대상요소기록 = 요소기록[key];
+          if (!대상요소기록.name.includes('플레이어')) {
+            if (!대상요소기록.alive) {
+              continue;
+            }
+            const 적군 = HTML(대상요소기록.name);
+            const 적군Rect = 적군.getBoundingClientRect();
+            const 적군X = 적군Rect.left + 적군Rect.width / 2;
+            const 적군Y = 적군Rect.bottom + 적군Rect.height / 2;
+
+            if (Math.floor(Math.random() * 100) > 96 - 레벨 * 2) {
+              대상요소기록.deg = 방향(대상요소기록.name, '#플레이어');
+            } else {
+              대상요소기록.deg += Math.random() * 5;
+            }
+
+            let 이동거리 = Math.random() * 20 + 15 + 레벨 * 12;
+            if (스킬.includes('lower')) {
+              이동거리 *= 1.5;
+            }
+            if (대상요소기록.type == 'spec') {
+              이동거리 *= 0.5;
+            }
+            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 90) {
+              대상요소기록.deg += 랜덤(100, 200);
+              이동거리 *= 50;
+              HTML(대상요소기록.name).style.filter = 'brightness(2)';
+              setTimeout(() => {
+                HTML(대상요소기록.name).style.filter = '';
+              }, 500);
+            }
+            let 이동X = 이동거리 * Math.sin(대상요소기록.deg * (Math.PI / 180));
+            let 이동Y = 이동거리 * Math.cos(대상요소기록.deg * (Math.PI / 180));
+
+            const 월드 = HTML('#월드');
+            const 월드Rect = 월드.getBoundingClientRect();
+
+            const 예상X = 적군Rect.left + 이동X;
+            const 예상Y = 적군Rect.bottom + 이동Y;
+            const 월드Padding = 18;
+            const 안전여유 = 1;
+
+            const 남은거리X =
+              예상X < 월드Rect.left + 월드Padding + 안전여유
+                ? 월드Rect.left + 월드Padding + 안전여유 - 적군Rect.left
+                : 예상X + 적군Rect.width >
+                  월드Rect.right - 월드Padding - 안전여유
+                ? 월드Rect.right -
+                  월드Padding -
+                  안전여유 -
+                  (적군Rect.left + 적군Rect.width)
+                : 이동X;
+
+            const 남은거리Y =
+              예상Y < 월드Rect.top + 월드Padding + 안전여유
+                ? 월드Rect.top + 월드Padding + 안전여유 - 적군Rect.top
+                : 예상Y + 적군Rect.height >
+                  월드Rect.bottom - 월드Padding - 안전여유
+                ? 월드Rect.bottom -
+                  월드Padding -
+                  안전여유 -
+                  (적군Rect.top + 적군Rect.height)
+                : 이동Y;
+
+            // 충돌중복방지 및 적군 거리 계산
+
+            if (Math.abs(남은거리X) < Math.abs(이동X)) {
+              이동X = 남은거리X - 10;
+              //대상요소기록.deg = (360 - 대상요소기록.deg) % 360;
+              대상요소기록.deg = 방향(대상요소기록.name, '#플레이어');
+              //alert('d')
+            }
+
+            if (Math.abs(남은거리Y) < Math.abs(이동Y)) {
+              이동Y = 남은거리Y - 5;
+              //대상요소기록.deg = (360 - 대상요소기록.deg) % 360;
+              대상요소기록.deg = 방향(대상요소기록.name, '#플레이어');
+              방향이동(대상요소기록.name, 대상요소기록.deg, 10);
+              //alert('d')
+            }
+            HTML(대상요소기록.name).style.transition =
+              'all 2s linear, transform 1s ease, width 3s ease, height 3s ease, border 3s ease, border-radius 3s ease';
+            이동(대상요소기록.name, 이동X, 이동Y, 18);
+            HTML(
+              대상요소기록.name
+            ).style.transform = `rotate(${대상요소기록.deg}deg)`;
+            if (터치('#플레이어', 대상요소기록.name) && 충돌중복방지) {
+              충돌중복방지 = false;
+              const 적군Id = 대상요소기록.name;
+              if (대상요소기록.alive) {
+                대상요소기록.deg = (대상요소기록.deg + 180) % 360;
+                const 이동거리 = Math.random() * 20 + 50;
+                await 방향이동(적군Id, 대상요소기록.deg, 이동거리);
+                체력--;
+                HTML('#플레이어').style.filter =
+                  'brightness(1.1) contrast(1.5)';
+                HTML('#월드').style.filter = `contrast(${
+                  1.1 + (레벨 - 1) * 0.1
+                })`;
+                HTML('#score').value -= 1;
+                setTimeout(() => {
+                  충돌중복방지 = true;
+                  HTML('#플레이어').style.filter = '';
+                  HTML('#월드').style.filter = `contrast(${
+                    1 + (레벨 - 1) * 0.1
+                  })`;
+                }, 200);
+                if (체력 <= 0) {
+                  게임오버();
+                }
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      /*function 적군이동() {
+        const player = HTML('#플레이어');
+        const playerRect = player.getBoundingClientRect();
+        const playerX = playerRect.left + playerRect.width / 2;
+        const playerY = playerRect.bottom + playerRect.height / 2;
+
+        for (const key in 요소기록) {
+          const 대상요소기록 = 요소기록[key];
+          if (!대상요소기록.name.includes('플레이어')) {
+            if (!대상요소기록.alive) {
+              continue;
+            }
+            const 적군 = HTML(대상요소기록.name);
+            const 적군Rect = 적군.getBoundingClientRect();
+
+            if (Math.floor(Math.random() * 100) > 96 - 레벨 * 2) {
+              대상요소기록.deg = 방향(대상요소기록.name, '#플레이어');
+            } else {
+              대상요소기록.deg += 랜덤(1, 5);
+            }
+
+            let 이동거리 = Math.random() * 20 + 15 + 레벨 * 12;
+            if (스킬.includes('lower')) {
+              이동거리 *= 1.5;
+            }
+            if (대상요소기록.type == 'spec') {
+              이동거리 *= 2;
+            }
+
+            //방향이동(대상요소기록.name,대상요소기록.deg,이동거리)
+            // 스타일 적용
+            HTML(대상요소기록.name).style.transition =
+              'all 2s linear, transform 1s ease';
+            HTML(대상요소기록.name).style.transform = `rotate(${
+              대상요소기록.deg + 90
+            }deg)`;
+          }
+        }
+      }*/
+    </script>
+  </body>
+</html>
