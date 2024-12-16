@@ -976,7 +976,7 @@
             deg: Math.floor(Math.random() * 180) + 1,
           };
 
-          if (랜덤(20, 40) > 40 - 레벨 * 6) {
+          if (i>=num-레벨) {
             HTML(`#적${적카운터}`).style.border = 'none';
             HTML(`#적${적카운터}`).style.width = '12px';
             HTML(`#적${적카운터}`).style.height = '12px';
@@ -1060,7 +1060,7 @@
 
         for (const key in 요소기록) {
           const 대상요소기록 = 요소기록[key];
-          if (!대상요소기록.name.includes('플레이어')) {
+          if (!대상요소기록.name.includes('플레이어') && 체력>0) {
             if (!대상요소기록.alive) {
               continue;
             }
@@ -1075,16 +1075,16 @@
               대상요소기록.deg += Math.random() * 5;
             }
 
-            let 이동거리 = Math.random() * 20 + 15 + 레벨 * 12;
+            let 이동거리 = Math.random() * 20 + 25 + 레벨 * 12;
             if (스킬.includes('lower')) {
               이동거리 *= 1.5;
             }
             if (대상요소기록.type == 'spec') {
               이동거리 *= 0.5;
             }
-            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 90) {
+            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 70) {
               대상요소기록.deg += 랜덤(100, 200);
-              이동거리 *= 50;
+              이동거리 *= 100;
               HTML(대상요소기록.name).style.filter = 'brightness(2)';
               setTimeout(() => {
                 HTML(대상요소기록.name).style.filter = '';
