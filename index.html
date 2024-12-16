@@ -1090,6 +1090,14 @@
                 HTML(대상요소기록.name).style.filter = '';
               }, 500);
             }
+            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 70) {
+              대상요소기록.deg =방향(대상요소기록.name, '#플레이어');
+              이동거리 *= 100;
+              HTML(대상요소기록.name).style.filter = 'brightness(2)';
+              setTimeout(() => {
+                HTML(대상요소기록.name).style.filter = '';
+              }, 500);
+            }
             let 이동X = 이동거리 * Math.sin(대상요소기록.deg * (Math.PI / 180));
             let 이동Y = 이동거리 * Math.cos(대상요소기록.deg * (Math.PI / 180));
 
