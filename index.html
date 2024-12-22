@@ -1014,7 +1014,7 @@
     당신이 한강빙판에서 <span class="highlight">스케이트</span>를 타고 있는데,
   </div>
   <div>
-    갑자기 <span class="highlight">종이비행기</span>들이 날아와 당신을 괴롭힙니다!
+    <span class="highlight">종이비행기</span>들이 당신을 괴롭힙니다!
   </div>
   
   <div class="separator">
@@ -1112,6 +1112,7 @@
       let 적카운터 = 0;
       let 레벨 = 1;
       function 적군생성(num) {
+        if (체력 <= 0){return};
         const player = HTML('#플레이어');
         const playerRect = player.getBoundingClientRect();
         const world = HTML('#월드');
@@ -1213,7 +1214,7 @@
                 clearInterval(웨이브);
               }
               적군이동();
-            }, 150);
+            }, 100);
             setTimeout(() => {
               clearInterval(웨이브);
             }, 14900);
@@ -1279,7 +1280,7 @@
               대상요소기록.deg += Math.random() * 5;
             }
 
-            let 이동거리 = Math.random() * 20 + 25 + 레벨 * 12;
+            let 이동거리 = Math.random() * 20 + 15 + 레벨 * 12;
             if (스킬.includes('lower')) {
               이동거리 *= 1.5;
             }
@@ -1370,7 +1371,7 @@
                 await 방향이동(적군Id, 대상요소기록.deg, 이동거리);
                 체력--;
                 HTML('#플레이어').style.filter =
-                  'brightness(1.1) contrast(1.5)';
+                  'hue-rotate(0deg) saturate(150%) brightness(1.5)';
                 HTML('#월드').style.filter = `contrast(${
                   1.1 + (레벨 - 1) * 0.1
                 })`;
