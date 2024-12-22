@@ -883,8 +883,8 @@
                   '강력한 두번의 파동폭발을 발생시켜요! 스페이스키를 눌러서 사용하세요!'
                 );
                 $admin = true;
-              } else if (true) {
-                아이템.push('무적');
+              } else if (랜덤(1, 2) > 1) {
+                //아이템.push('무적');
                 팝창(
                   'https://ifh.cc/g/q216WY.png',
                   '5초무적',
@@ -893,6 +893,20 @@
                 HTML('#플레이어').style.opacity = 0.5;
                 setTimeout(() => {
                   HTML('#플레이어').style.opacity = 1;
+                }, 5000);
+              }
+              else{
+                //아이템.push('가속');
+                팝창(
+                  'https://ifh.cc/g/jJZk6o.png',
+                  '가속',
+                  '5초간 가속돼요!'
+                );
+                플레이어속도*=2;
+                HTML('#플레이어').style.filter = 'contrast(2)';
+                setTimeout(() => {
+                  HTML('#플레이어').style.filter = 'contrast(1)';
+                  플레이어속도/=2;
                 }, 5000);
               }
               HTML('#아이템').style.opacity = 0;
