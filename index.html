@@ -313,7 +313,7 @@
         }
         100% {
           background-color: rgba(255, 85, 85, 0);
-          transform: scale(50);
+          transform: scale(40);
           opacity: 0;
           box-shadow: 0 0 10px 5px rgba(255, 85, 85, 0.8);
           border-radius: 5px;
@@ -855,7 +855,7 @@
             이동('#플레이어', 이동값.x, 이동값.y, 10);
             if (HTML('#아이템') && 터치('#플레이어', '#아이템') && 아이템여부) {
               아이템여부 = false;
-              if(랜덤(1,40)>25){
+              if(랜덤(1,2)>1){
               아이템.push('폭탄');
               팝창(
                 'https://ifh.cc/g/YhC0xl.png',
