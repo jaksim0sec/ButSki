@@ -855,17 +855,23 @@
             이동('#플레이어', 이동값.x, 이동값.y, 10);
             if (HTML('#아이템') && 터치('#플레이어', '#아이템') && 아이템여부) {
               아이템여부 = false;
-              if(랜덤(1,50)>25){
+              if(랜덤(1,40)>25){
               아이템.push('폭탄');
               팝창(
                 'https://ifh.cc/g/YhC0xl.png',
                 '대형폭탄',
                 '강력한 두번의 파동폭발을 발생시켜요! 스페이스키를 눌러서 사용하세요!'
               );
-              $admin = true;
-              console.log($admin);}
+              $admin = true;}
               else if(true){
                 아이템.push('무적');
+                팝창(
+                'https://ifh.cc/g/q216WY.png',
+                '5초무적',
+                '5초간 무적이에요!'
+              );
+              HTML('#플레이어').style.opacity = 0.5;
+              setTimeout(()=>{HTML('#플레이어').style.opacity = 1;},5000)
               }
               HTML('#아이템').style.opacity = 0;
               setTimeout(() => {
@@ -1144,7 +1150,7 @@
               적군생성량 = Math.round((적군생성량 *= 8 / 10));
             }
             적군생성(적군생성량);
-            if (랜덤(1, 3) > 1 && !HTML('#아이템')) {
+            if (레벨%2 !== 0 && !HTML('#아이템')) {
               const 월 = HTML('#월드').getBoundingClientRect();
               let x = 월.width / 2 + 랜덤(-400, 400);
               let y = 월.height / 2 + 랜덤(-200, 200);
@@ -1250,18 +1256,18 @@
             if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 70) {
               대상요소기록.deg += 랜덤(100, 200);
               이동거리 *= 100;
-              HTML(대상요소기록.name).style.filter = 'brightness(2)';
+              HTML(대상요소기록.name).style.backgroundColor = '#BBA093';
               setTimeout(() => {
-                HTML(대상요소기록.name).style.filter = '';
-              }, 500);
+                HTML(대상요소기록.name).style.backgroundColor = 'black';
+              }, 300);
             }
-            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 70) {
+            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 50) {
               대상요소기록.deg = 방향(대상요소기록.name, '#플레이어');
               이동거리 *= 100;
-              HTML(대상요소기록.name).style.filter = 'brightness(2)';
+              HTML(대상요소기록.name).style.backgroundColor = '#BBA093';
               setTimeout(() => {
-                HTML(대상요소기록.name).style.filter = '';
-              }, 500);
+                HTML(대상요소기록.name).style.backgroundColor = 'black';
+              }, 300);
             }
             let 이동X = 이동거리 * Math.sin(대상요소기록.deg * (Math.PI / 180));
             let 이동Y = 이동거리 * Math.cos(대상요소기록.deg * (Math.PI / 180));
@@ -1318,7 +1324,7 @@
             HTML(
               대상요소기록.name
             ).style.transform = `rotate(${대상요소기록.deg}deg)`;
-            if (터치('#플레이어', 대상요소기록.name) && 충돌중복방지) {
+            if (터치('#플레이어', 대상요소기록.name) && 충돌중복방지 && HTML('#플레이어').style.opacity !== '0.5') {
               충돌중복방지 = false;
               const 적군Id = 대상요소기록.name;
               if (대상요소기록.alive) {
