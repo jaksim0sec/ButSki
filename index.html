@@ -4,7 +4,6 @@
     <link rel="shortcut icon" href="https://ifh.cc/g/69rynC.png" />
     <meta charset="UTF-8" />
     <title>꽁꽁 얼어붙은 한강 위에 종이비행기가</title>
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <style>
       body {
@@ -27,6 +26,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        overflow: hidden;
       }
 
       #플레이어 {
@@ -459,6 +459,91 @@
     </style>
   </head>
   <body>
+    <style>
+      .팝창 {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40vw;
+        padding: 10px;
+        margin: 10px;
+        border: none;
+        border-radius: 15px;
+        background: linear-gradient(45deg, #00000050, #00000070);
+        color: white;
+        animation: 팝창1 1s ease;
+        display: flex;
+        transition: all 0.5s ease;
+      }
+
+      .팝창이미지 {
+        width: 50px;
+        height: 50px;
+        /*border: 1px solid black;*/
+        margin-right: 12px;
+      }
+
+      .팝창콘텐츠 {
+      }
+
+      .팝창제목 {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      @keyframes 팝창1 {
+        0% {
+          transform: translateX(-50%) translateY(-100px) scaleY(-1);
+          filter: none;
+        }
+        50% {
+          transform: translateX(-50%) translateY(25px);
+          filter: none;
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-50%) translateY(0);
+          filter: none;
+          opacity: 1;
+        }
+      }
+
+      @keyframes 팝창2 {
+        0% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(25px);
+        }
+        100% {
+          transform: translateX(-50%) translateY(-100px) scaleY(1);
+        }
+      }
+    </style>
+    <script>
+      let W카운터 = 0;
+      function 팝창(img, title, cont) {
+        W카운터++;
+        const W = document.createElement('div');
+        W.classList.add('팝창');
+        W.classList.add('오브젝트');
+        W.id = `팝창${W카운터}`;
+        W.innerHTML = `
+    <img class='팝창이미지' src = '${img}'/>
+    <div class = '팝창콘텐츠'>
+    <div class='팝창제목'>${title}</div>
+    <div class='팝창내용'>${cont}</div>
+    </div>
+    `;
+        HTML('#월드').appendChild(W);
+        setTimeout(() => {
+          HTML(`#팝창${W카운터}`).style.animation = '팝창2 0.7s ease forwards';
+        }, 2000);
+        setTimeout(() => {
+          HTML(`#팝창${W카운터}`).remove();
+        }, 2510);
+      }
+    </script>
     <div id="월드">
       <div id="name" onclick="window.location.href='park0sec.vercel.app'">
         @샛별코딩동아리회장
@@ -752,7 +837,7 @@
             }
             if (
               (입력.includes('q') || 입력.includes(' ')) &&
-              스킬.includes('bomb')
+              (스킬.includes('bomb') || 아이템.includes('폭탄'))
             ) {
               if (폭탄여부) {
                 폭탄여부 = false;
@@ -760,13 +845,18 @@
                 폭탄배치(위.left, 위.bottom);
                 setTimeout(() => {
                   폭탄여부 = true;
-                }, 800);
+                }, 1500);
               }
             }
             이동('#플레이어', 이동값.x, 이동값.y, 10);
             if (HTML('#아이템') && 터치('#플레이어', '#아이템') && 아이템여부) {
               아이템여부 = false;
               아이템 = ['폭탄'];
+              팝창(
+                '',
+                '대형폭탄',
+                '미니폭탄보다 훨씬 큰 폭탄을 사용할 수 있어요! 스페이스키를 눌러서 사용하세요!'
+              );
               $admin = true;
               console.log($admin);
               HTML('#아이템').style.opacity = 0;
@@ -1046,29 +1136,29 @@
               적군생성량 = Math.round((적군생성량 *= 8 / 10));
             }
             적군생성(적군생성량);
-            if (랜덤(1,5) > 레벨-1 && !HTML('#아이템')) {
-                const 월 = HTML('#월드').getBoundingClientRect();
-                let x = 월.width/2 + 랜덤(-400,400);
-                let y = 월.height/2+ 랜덤(-200,200) ;
-                console.log(x,y)
-                const 폭탄아이템 = document.createElement('div');
-                폭탄아이템.classList.add('아이템');
-                폭탄아이템.classList.add('오브젝트');
-                폭탄아이템.style.position = 'absolute';
-                폭탄아이템.id = `아이템`;
-                폭탄아이템.style.bottom = `${y}px`;
-                폭탄아이템.style.left = `${x}px`;
-                폭탄아이템.style.opacity = 0;
-                폭탄아이템.innerHTML = '?';
-                폭탄아이템.style.fontWeight = 'bold';
-                폭탄아이템.style.display = 'flex';
-                폭탄아이템.style.alignItems = 'cetner';
-                폭탄아이템.style.justifyContent = 'center';
-                폭탄아이템.style.color = '#FFF1DC80';
-                //폭탄아이템.innerHTML = `<div class="shadow"></div>`;
-                HTML('#월드').appendChild(폭탄아이템);
-                HTML('#아이템').style.opacity = 1;
-              }
+            if (랜덤(1, 5) > 레벨 - 1 && !HTML('#아이템')) {
+              const 월 = HTML('#월드').getBoundingClientRect();
+              let x = 월.width / 2 + 랜덤(-400, 400);
+              let y = 월.height / 2 + 랜덤(-200, 200);
+              console.log(x, y);
+              const 폭탄아이템 = document.createElement('div');
+              폭탄아이템.classList.add('아이템');
+              폭탄아이템.classList.add('오브젝트');
+              폭탄아이템.style.position = 'absolute';
+              폭탄아이템.id = `아이템`;
+              폭탄아이템.style.bottom = `${y}px`;
+              폭탄아이템.style.left = `${x}px`;
+              폭탄아이템.style.opacity = 0;
+              폭탄아이템.innerHTML = '?';
+              폭탄아이템.style.fontWeight = 'bold';
+              폭탄아이템.style.display = 'flex';
+              폭탄아이템.style.alignItems = 'cetner';
+              폭탄아이템.style.justifyContent = 'center';
+              폭탄아이템.style.color = '#FFF1DC80';
+              //폭탄아이템.innerHTML = `<div class="shadow"></div>`;
+              HTML('#월드').appendChild(폭탄아이템);
+              HTML('#아이템').style.opacity = 1;
+            }
             웨이브 = setInterval(() => {
               //console.log(요소기록);
               if (체력 <= 0) {
