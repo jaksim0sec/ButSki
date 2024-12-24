@@ -825,7 +825,7 @@
     <script>
       //let 입력인터버 = {};
       let 입력 = [];
-      let 플레이어속도 = 15;
+      let 플레이어속도 = 17;
       let 인터버 = null;
       let 이동값 = { x: 0, y: 0 };
       let 폭탄여부 = true;
@@ -1018,7 +1018,6 @@
   </div>
   
   <div class="separator">
-    <hr>
   </div>
   
   <div>
@@ -1045,14 +1044,14 @@
   <div class="abilities-section">
     <span class="section-title">▶능력선택◀</span>
     <div style = "font-size:11px;margin-bottom:10px; margin-top : 2px;">
-        (<span class="highlight">여러개</span>도 선택 가능해요! 스킬개수 만큼의 <span class = "highlight">점수감점</span> 조심하세요!)
+        (<span class="highlight">여러개</span>도 선택 가능해요! 대신 선택 개수 만큼 <span class = "highlight">점수가 감점</span> 됩니다!)
     </div>
   
     <div class="skill-cards">
       <div class="skill-card" id="skill-card1" onclick='스킬 = 토글(스킬,"bomb,"); HTML("#skill-card1").innerHTML = 토글(HTML("#skill-card1").innerHTML, "←선택됨")'><span class="highlight">스페이스키</span>를 눌러 1초 <span class="highlight">미니시한폭탄</span>을 설치</div>
-  <div class="skill-card" id="skill-card2" onclick='스킬 = 토글(스킬,"stren,"); HTML("#skill-card2").innerHTML = 토글(HTML("#skill-card2").innerHTML, "←선택됨")'>체력이 <span class="highlight">2</span>증가, 속도가 <span class="highlight">50%</span>증가</div>
+  <div class="skill-card" id="skill-card2" onclick='스킬 = 토글(스킬,"stren,"); HTML("#skill-card2").innerHTML = 토글(HTML("#skill-card2").innerHTML, "←선택됨")'>체력이 <span class="highlight">2</span>증가, 속도가 <span class="highlight">20%</span>증가</div>
   <div class="skill-card" id="skill-card3" onclick='스킬 = 토글(스킬,"lower,"); HTML("#skill-card3").innerHTML = 토글(HTML("#skill-card3").innerHTML, "←선택됨")'>종이비행기의 속도 <span class="highlight">15%</span>증가, 개수 <span class="highlight">20%</span>감소</div>
-  
+  <div class="skill-card" id="skill-card4" onclick='스킬 = 토글(스킬,"jump,"); HTML("#skill-card4").innerHTML = 토글(HTML("#skill-card4").innerHTML, "←선택됨")'>게임을  <span class="highlight">4단계</span>부터 시작하고 <span class="highlight">1점</span> 추가 획득</div>
     </div>
   </div>
   
@@ -1065,7 +1064,7 @@
     <script>
       function 시작() {
         if (스킬.includes('stren')) {
-          플레이어속도 *= 1.5;
+          플레이어속도 *= 1.2;
           HTML('#score').max = 5;
           HTML('#score').value = 5;
           체력 = 5;
@@ -1119,7 +1118,7 @@
         const worldRect = world.getBoundingClientRect();
         const playerX = playerRect.left + playerRect.width / 2;
         const playerY = playerRect.top + playerRect.height / 2;
-        const minDistance = 200;
+        const minDistance = 500;
         const padding = 30;
 
         for (let i = 0; i < num; i++) {
@@ -1170,9 +1169,17 @@
       let 체력 = 3;
       let 아이템 = [];
       async function 관리() {
+        팝창(
+                  'https://ifh.cc/g/q216WY.png',
+                  '[기본효과과] 5초무적',
+                  '게임을 시작하고 5초간 무적이에요!'
+                );
+            HTML('#플레이어').style.opacity = '0.5';
+            setTimeout(()=>{HTML('#플레이어').style.opacity = '1';},5000);
+            if(스킬.includes('jump')){레벨 = 4};
         for (let i = 0; i < 30; i++) {
           setTimeout(() => {
-            HTML('#stage').innerHTML = 'Stage ' + 레벨;
+            HTML('#stage').innerHTML = 'Stage #' + 레벨;
             HTML('#stage').style.animation = 'stageSet 0.8s ease';
             HTML('#월드').style.filter = `contrast(${1 + (레벨 - 1) * 0.1})`;
             setTimeout(() => {
@@ -1280,7 +1287,7 @@
               대상요소기록.deg += Math.random() * 5;
             }
 
-            let 이동거리 = Math.random() * 20 + 10 + 레벨 * 12;
+            let 이동거리 = Math.random() * 20 + 6 + 레벨 * 12;
             if (스킬.includes('lower')) {
               이동거리 *= 1.5;
             }
@@ -1295,7 +1302,7 @@
                 HTML(대상요소기록.name).style.backgroundColor = 'black';
               }, 300);
             }*/
-            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 75) {
+            if (대상요소기록.type == 'spec' && 랜덤(0, 100) > 85) {
               대상요소기록.deg = 방향(대상요소기록.name, '#플레이어');
               이동거리 *= 100;
               HTML(대상요소기록.name).style.backgroundColor = '#E48A61';
