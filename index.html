@@ -1051,7 +1051,7 @@
       <div class="skill-card" id="skill-card1" onclick='스킬 = 토글(스킬,"bomb,"); HTML("#skill-card1").innerHTML = 토글(HTML("#skill-card1").innerHTML, "←선택됨")'><span class="highlight">스페이스키</span>를 눌러 1초 <span class="highlight">미니시한폭탄</span>을 설치</div>
   <div class="skill-card" id="skill-card2" onclick='스킬 = 토글(스킬,"stren,"); HTML("#skill-card2").innerHTML = 토글(HTML("#skill-card2").innerHTML, "←선택됨")'>체력이 <span class="highlight">2</span>증가, 속도가 <span class="highlight">20%</span>증가</div>
   <div class="skill-card" id="skill-card3" onclick='스킬 = 토글(스킬,"lower,"); HTML("#skill-card3").innerHTML = 토글(HTML("#skill-card3").innerHTML, "←선택됨")'>종이비행기의 속도 <span class="highlight">15%</span>증가, 개수 <span class="highlight">20%</span>감소</div>
-  <div class="skill-card" id="skill-card4" onclick='스킬 = 토글(스킬,"jump,"); HTML("#skill-card4").innerHTML = 토글(HTML("#skill-card4").innerHTML, "←선택됨")'>게임을  <span class="highlight">4단계</span>부터 시작하고 <span class="highlight">1점</span> 추가 획득</div>
+  <div class="skill-card" id="skill-card4" onclick='스킬 = 토글(스킬,"jump,"); HTML("#skill-card4").innerHTML = 토글(HTML("#skill-card4").innerHTML, "←선택됨")'>게임을  <span class="highlight">3단계</span>부터 시작하고 <span class="highlight">1점</span> 추가 획득</div>
     </div>
   </div>
   
@@ -1176,7 +1176,7 @@
                 );
             HTML('#플레이어').style.opacity = '0.5';
             setTimeout(()=>{HTML('#플레이어').style.opacity = '1';},5000);
-            if(스킬.includes('jump')){레벨 = 4};
+            if(스킬.includes('jump')){레벨 = 3};
         for (let i = 0; i < 30; i++) {
           setTimeout(() => {
             HTML('#stage').innerHTML = 'Stage #' + 레벨;
@@ -1229,6 +1229,7 @@
           }, 15000 * i);
         }
       }
+      let 최종점수 = 0;
       function 게임오버() {
         HTML('#월드').style.filter = ``;
         let count = 0;
@@ -1237,9 +1238,9 @@
             count++;
           }
         }
-        if(스킬.includes('jump')){최종점수 ++};
         최종점수 = 레벨 - 1;
         최종점수 -= count;
+        if(스킬.includes('jump')){최종점수 ++};
         if (최종점수 < 0) {
           최종점수 = 0;
         }
