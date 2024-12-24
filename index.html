@@ -143,9 +143,9 @@
         font-style: normal;
         position: absolute;
         z-index: 10;
-        width: 400px;
+        width: 440px;
         border-radius: 10px;
-        padding: 20px;
+        padding: 15px;
         box-shadow: 0px 0px 5px #00000030;
         display: flexbox;
         justify-content: center;
@@ -156,6 +156,7 @@
         background: linear-gradient(180deg, #25222180, #00000060);
         color: #fff2e1;
         backdrop-filter: blur(5px);
+        transform: scale(1);
       }
 
       .window-holder {
@@ -176,7 +177,7 @@
         display: none;
       }
       #window-cont {
-        width: 390px;
+        width: 100%;
       }
 
       button {
@@ -346,7 +347,7 @@
       }
 
       .abilities-section {
-        font-size: 17px;
+        font-size: 16px;
         font-weight: bold;
       }
 
@@ -390,6 +391,18 @@
         border-width: 0px 6px 13px 6px;
         border-color: transparent transparent #e7e5fa transparent;
         animation: show 1s ease-in-out;
+        transform-origin: center center;
+        transition: all 0.15s ease, transform 3s ease-out;
+      }
+
+      .fake적 {
+        z-index: 5;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0px 6px 13px 6px;
+        border-color: transparent transparent #e7e5fa transparent;
         transform-origin: center center;
         transition: all 0.15s ease, transform 3s ease-out;
       }
@@ -542,8 +555,10 @@
     </style>
     <script>
       let W카운터 = 0;
-      function 팝창(img, title, cont) {
+      let 상대카운터 = 0;
+      async function 팝창(img, title, cont) {
         W카운터++;
+        상대카운터++;
         const W = document.createElement('div');
         W.classList.add('팝창');
         W.classList.add('오브젝트');
@@ -561,6 +576,7 @@
         }, 2000);
         setTimeout(() => {
           HTML(`#팝창${W카운터}`).remove();
+          상대카운터--;
         }, 2510);
       }
     </script>
@@ -843,16 +859,16 @@
             ////console.log('dd')
             이동값.x = 0;
             이동값.y = 0;
-            if (입력.includes('a')) {
+            if (입력.includes('a') || 입력.includes('A') || 입력.includes('ArrowLeft')) {
               이동값.x -= 플레이어속도;
             }
-            if (입력.includes('d')) {
+            if (입력.includes('d') || 입력.includes('D') || 입력.includes('ArrowRight')) {
               이동값.x += 플레이어속도;
             }
-            if (입력.includes('w')) {
+            if (입력.includes('w') || 입력.includes('W') || 입력.includes('ArrowUp')) {
               이동값.y += 플레이어속도;
             }
-            if (입력.includes('s')) {
+            if (입력.includes('s') || 입력.includes('S') || 입력.includes('ArrowDown')) {
               이동값.y -= 플레이어속도;
             }
             if (
@@ -1021,12 +1037,12 @@
   </div>
   
   <div>
-    <span class="highlight">A, S, D, W</span> 키로 <span style = "width:15px;height:15px; display:inline-block;"id = "fakePlayer"></span> 를 이동하며
-    <span class = "적" style = "margin-top:5px; "></span>⠀⠀들을 피해보세요!
+    <span class="highlight">A, S, D, W</span> 키 또는  <span class="highlight">방향키</span> 로 <span style = "width:15px;height:15px; display:inline-block;"id = "fakePlayer"></span> 를 이동하며
+    <span class = "fake적" style = "margin-top:5px; "></span>⠀⠀들을 피해보세요!
   </div>
   
   <div>
-    체력은 <span class="highlight">3점</span>에서 <span class = "적" style = "margin-top:5px; "></span>⠀⠀에 닿을 때마다 1점씩 내려갑니다.
+    체력은 <span class="highlight">3점</span>에서 <span class = "fake적" style = "margin-top:5px; "></span>⠀⠀에 닿을 때마다 1점씩 내려갑니다.
   </div>
   
   <div>
@@ -1043,7 +1059,7 @@
   
   <div class="abilities-section">
     <span class="section-title">▶능력선택◀</span>
-    <div style = "font-size:11px;margin-bottom:10px; margin-top : 2px;">
+    <div style = "font-size:10px;margin-bottom:10px; margin-top : 2px;">
         (<span class="highlight">여러개</span>도 선택 가능해요! 대신 선택 개수 만큼 <span class = "highlight">점수가 감점</span> 됩니다!)
     </div>
   
@@ -1191,7 +1207,7 @@
               적군생성량 = Math.round((적군생성량 *= 8 / 10));
             }
             적군생성(적군생성량);
-            if (레벨 % 2 !== 0 && !HTML('#아이템')) {
+            if ((레벨 % 2 == 0) && !HTML('#아이템')) {
               const 월 = HTML('#월드').getBoundingClientRect();
               let x = 월.width / 2 + 랜덤(-400, 400);
               let y = 월.height / 2 + 랜덤(-200, 200);
@@ -1247,7 +1263,7 @@
         알림(
           '게임오버',
           `
-    사망하였습니다 😓
+    체력이 0이 되었어요 😓
     <div style = "margin:20px;"><hr style="width: 30%; height: 2px; background-color: #FFFFFF50; border: none;">
   </div>
     🏆점수 • <span class = "highlight">${최종점수}</span>${
@@ -1255,7 +1271,7 @@
           }
     <div></div>
     📜결과코드 • <span class = "highlight">${코드()}</span>
-    <div></div><div style = "font-size:12px">(옆에 배치된 포스트잇에 이 코드를 적고 보상을 받으러 가보세요!)</div>
+    <div></div><div style = "font-size:12px; margin-top: 5px;">(옆에 배치된 포스트잇에 이 코드를 적고 보상을 받으러 가보세요!)</div>
     `,
           '다시플레이',
           '/*location.reload()*/window.alert(`동아리 부원에게 요청해주세요! 플레이 횟수를 맞추기 위함입니다!`);'
