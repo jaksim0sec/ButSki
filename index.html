@@ -804,14 +804,16 @@
           console.error(`대상 ${대상이름}을(를) 찾을 수 없습니다.`);
           return; //이유는 모르겠는데 자꾸 null 됨
         }
+        const 아이템여부 = (아이템.includes('폭탄'));
         대상.style.animation = `${
-          $admin ? '개쩖폭발' : '폭발'
+          ($admin || 아이템여부) ? '개쩖폭발' : '폭발'
         } 0.8s ease-out forwards`;
+        if(아이템여부){
         $admin = false;
         아이템.splice(
           아이템.findIndex((i) => i.includes('폭탄')),
           1
-        );
+        );}
         const 폭발확인 = setInterval(() => {
           const 폭발범위 = 대상.getBoundingClientRect();
           for (const key in 요소기록) {
