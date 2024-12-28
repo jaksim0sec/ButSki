@@ -34,6 +34,13 @@
         left: 50%;
         transform: translate(-50%, -50%);
         overflow: hidden;
+        background: linear-gradient(
+            217deg,
+            #7A78FF,
+            rgb(255 0 0 / 0%) 70.71%
+          ),
+          linear-gradient(127deg, #aca1ff, #9283ff, #6D57FF),
+          linear-gradient(336deg, #7f6efd, #7C35FF);
       }
 
       #플레이어 {
@@ -615,6 +622,7 @@
       }
     </script>
     <div id="월드">
+      <div></div>
       <div id="name" onclick="window.location.href='park0sec.vercel.app'">
         @샛별코딩동아리회장
       </div>
@@ -1088,7 +1096,7 @@
           parseInt(localStorage.getItem('times')) - 1
         );
       } else {
-        localStorage.setItem('times', 3);
+        localStorage.setItem('times', 2);
       }
       HTML('#times').innerHTML = localStorage.getItem('times');
       if(HTML('#times').innerHTML<0){
