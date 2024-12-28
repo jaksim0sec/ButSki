@@ -43,6 +43,22 @@
           linear-gradient(336deg, #7f6efd, #7C35FF);
       }
 
+      /*#배경{
+        width: 98vw;
+        height: 95vh;
+        position: absolute;
+        top: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background: linear-gradient(
+            217deg,
+            #7A78FF,
+            rgb(255 0 0 / 0%) 70.71%
+          ),
+          linear-gradient(127deg, #aca1ff, #9283ff, #6D57FF),
+          linear-gradient(336deg, #7f6efd, #7C35FF);
+      }*/
+
       #플레이어 {
         width: 22px;
         height: 22px;
@@ -246,7 +262,7 @@
         position: absolute;
         width: 18px;
         height: 18px;
-        background-color: #ffe8c9;
+        background: linear-gradient(90deg, #FFD39A, #FFB048);
         border-radius: 50%;
         box-shadow: 4px 4px 4px #554698, inset -3px -3px 5px #da891f90;
         z-index: 0;
@@ -254,8 +270,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: bold;
-        color: #3d322670;
+        font-weight: 900;
+        color: #3d322690;
+        font-family: 'Do Hyeon', serif;
+        font-size: 12px;
       }
       @keyframes 폭탄생성 {
         0% {
@@ -279,35 +297,35 @@
 
       @keyframes 폭발 {
         0% {
-          background-color: #ff4141;
+          background: #ff4141;
           transform: scale(1);
           opacity: 1;
           box-shadow: 0 0 4px 2px rgba(255, 85, 85, 0.7),
             0 0 6px 3px rgba(255, 140, 0, 0.5);
         }
         30% {
-          background-color: #ff4141;
+          background: #ff4141;
           transform: scale(2);
           opacity: 0.8;
           box-shadow: 0 0 4px 2px rgba(255, 85, 85, 0.8),
             0 0 5px 3px rgba(255, 140, 0, 0.4);
         }
         50% {
-          background-color: #ff4141;
+          background: #ff4141;
           transform: scale(4);
           opacity: 0.6;
           box-shadow: 0 0 6px 3px rgba(255, 120, 120, 0.8),
             0 0 5px 4px rgba(255, 85, 85, 0.5);
         }
         80% {
-          background-color: #ff6141;
+          background: #ff6141;
           transform: scale(6);
           opacity: 0.4;
           box-shadow: 0 0 8px 4px rgba(255, 85, 85, 0.8),
             0 0 5px 4px rgba(255, 140, 0, 0.6);
         }
         100% {
-          background-color: #ff6141;
+          background: #ff6141;
           transform: scale(12);
           opacity: 0;
           box-shadow: 0 0 8px 4px rgba(255, 85, 85, 0.8);
@@ -316,14 +334,14 @@
 
       @keyframes 개쩖폭발 {
         0% {
-          background-color: rgba(255, 85, 85, 1);
+          background: rgba(255, 85, 85, 1);
           transform: scale(1);
           opacity: 1;
           box-shadow: 0 0 4px 2px rgba(255, 85, 85, 0.7),
             0 0 6px 3px rgba(255, 140, 0, 0.5);
         }
         30% {
-          background-color: rgba(255, 105, 105, 1);
+          background: rgba(255, 105, 105, 1);
           transform: scale(15);
           border-radius: 10px;
           opacity: 0.8;
@@ -331,14 +349,14 @@
             0 0 6px 3px rgba(255, 140, 0, 0.4);
         }
         50% {
-          background-color: rgba(255, 120, 120, 1);
+          background: rgba(255, 120, 120, 1);
           transform: scale(5);
           opacity: 0.6;
           box-shadow: 0 0 6px 3px rgba(255, 120, 120, 0.8),
             0 0 8px 4px rgba(255, 85, 85, 0.5);
         }
         80% {
-          background-color: rgba(255, 85, 85, 1);
+          background: rgba(255, 85, 85, 1);
           transform: scale(25);
           opacity: 0.4;
           box-shadow: 0 0 8px 4px rgba(255, 85, 85, 0.8),
@@ -346,7 +364,7 @@
           border-radius: 5px;
         }
         100% {
-          background-color: rgba(255, 85, 85, 0);
+          background: rgba(255, 85, 85, 0);
           transform: scale(50);
           opacity: 0;
           box-shadow: 0 0 10px 5px rgba(255, 85, 85, 0.8);
@@ -367,6 +385,9 @@
 
       .highlight {
         color: #fabf71;
+        background: linear-gradient(90deg, #FFD39A, #FFB048);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       .abilities-section {
@@ -622,7 +643,7 @@
       }
     </script>
     <div id="월드">
-      <div></div>
+      <div id = '배경'></div>
       <div id="name" onclick="window.location.href='park0sec.vercel.app'">
         @샛별코딩동아리회장
       </div>
@@ -836,7 +857,7 @@
         bomb.id = `b${폭탄개수}`;
         bomb.style.left = `${요소기록['#플레이어'].x + 5}px`;
         bomb.style.bottom = `${요소기록['#플레이어'].y + 5}px`;
-        bomb.innerHTML = '!';
+        bomb.innerHTML = 'B';
         HTML('#월드').appendChild(bomb);
 
         setTimeout(() => {
