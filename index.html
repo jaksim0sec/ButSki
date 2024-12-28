@@ -5,10 +5,12 @@
     <meta charset="UTF-8" />
     <title>꽁꽁 얼어붙은 한강 위에 종이비행기가</title>
     <meta name="viewport" content="width=device-width" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@600&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@600&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       body {
@@ -52,7 +54,7 @@
         );
         transition: all 0.1s ease, opacity 0.8s ease;
         box-shadow: inset -2px -2px 2px #da891f90,
-          inset -22px -22px 2px #ffffff50, 5px 5px 3px #5c4dba50;
+          inset -22px -22px 2px #ffffff50, 8px 8px 12px #3d318780;
       }
 
       #fakePlayer {
@@ -127,13 +129,13 @@
 
       progress::-webkit-progress-value {
         transition: all 0.5s ease;
-        background: linear-gradient(270deg, #FFFFFF, #FFFFFF65);
+        background: linear-gradient(270deg, #ffffff, #ffffff65);
         border-radius: 10px;
       }
 
       progress::-moz-progress-bar {
         transition: all 0.5s ease;
-        background-color: linear-gradient(270deg, #FFFFFF, #FFFFFF65);
+        background-color: linear-gradient(270deg, #ffffff, #ffffff65);
         border-radius: 10px;
       }
       #window {
@@ -157,7 +159,7 @@
         color: #fff2e1;
         backdrop-filter: blur(5px);
         transform: scale(1);
-        box-shadow: inset 8px 8px 5px #FFFFFF20, inset -8px -8px 5px #00000060;
+        box-shadow: inset 8px 8px 5px #ffffff20, inset -8px -8px 5px #00000060;
       }
 
       .window-holder {
@@ -195,7 +197,7 @@
         cursor: pointer;
         opacity: 0;
         animation: showB 0.5s ease-in-out;
-        box-shadow: inset 4px 4px 5px #FFFFFF15, inset -4px -4px 5px #00000060;
+        box-shadow: inset 4px 4px 5px #ffffff15, inset -4px -4px 5px #00000060;
       }
 
       @keyframes showB {
@@ -208,7 +210,7 @@
       }
       button:hover {
         background-color: #ffffff20;
-        color:white;
+        color: white;
         transform: scale(1.02) translateY(-4px);
         filter: brightness(1.2);
       }
@@ -219,10 +221,15 @@
 
       #name {
         position: absolute;
-        bottom: 15px;
-        right: 15px;
+        bottom: 20px;
+        right: 20px;
         font-weight: bold;
         color: #ffffff60;
+        font-family: 'Do Hyeon', serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 25px;
+        z-index: 0;
       }
       .highlight {
         font-weight: bold;
@@ -230,13 +237,18 @@
 
       .bomb {
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 18px;
+        height: 18px;
         background-color: #ffe8c9;
         border-radius: 50%;
         box-shadow: 4px 4px 4px #554698, inset -3px -3px 5px #da891f90;
         z-index: 0;
         animation: 폭탄생성 0.8s ease-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #3d322670;
       }
       @keyframes 폭탄생성 {
         0% {
@@ -244,12 +256,14 @@
         }
         28% {
           transform: translate(0, -15px) scale(1.1);
+          box-shadow: 4px 19px 4px #554698, inset -3px -3px 5px #da891f90;
         }
         65% {
           transform: translate(0, 0) scale(1);
+          box-shadow: 4px 4px 4px #554698, inset -3px -3px 5px #da891f90;
         }
         85% {
-          filter: brightness(1.5);
+          filter: brightness(1.2);
         }
         100% {
           filter: brightness(1);
@@ -272,7 +286,7 @@
             0 0 5px 3px rgba(255, 140, 0, 0.4);
         }
         50% {
-          background-color: #ff6141;
+          background-color: #ff4141;
           transform: scale(4);
           opacity: 0.6;
           box-shadow: 0 0 6px 3px rgba(255, 120, 120, 0.8),
@@ -345,7 +359,7 @@
       }
 
       .highlight {
-        color: #FABF71;
+        color: #fabf71;
       }
 
       .abilities-section {
@@ -356,14 +370,15 @@
       .skill-card {
         margin: 5px;
         padding: 5px;
-        background: #3B393770;
+        background: #3b393770;
         color: white;
         border-radius: 10px;
         text-align: center;
         transition: all 0.5s ease;
         font-size: 15px;
         border: 5px solid #ffffff00;
-        box-shadow: 0px 0px 0px #00000000,inset 4px 4px 5px #FFFFFF15, inset -4px -4px 5px #00000060;
+        box-shadow: 0px 0px 0px #00000000, inset 4px 4px 5px #ffffff15,
+          inset -4px -4px 5px #00000060;
       }
 
       .section-title {
@@ -373,9 +388,10 @@
       .skill-card:hover {
         transform: scale(1.05) translateY(-8px);
         filter: brightness(1.2);
-        border: 5px solid #3B393770;
+        border: 5px solid #3b393770;
         box-sizing: border-box;
-        box-shadow: 0px 5px 0.5px #28282880,inset 4px 4px 5px #FFFFFF15, inset -4px -4px 5px #00000060;
+        box-shadow: 0px 5px 0.5px #28282880, inset 4px 4px 5px #ffffff15,
+          inset -4px -4px 5px #00000060;
       }
 
       .skill-card:active {
@@ -456,24 +472,23 @@
         }
       }
       #stage {
-        margin: 8px 12px;
-        background: linear-gradient(270deg, #FFFFFF, #FFFFFF99);
+        margin: 14px 18px;
+        background: linear-gradient(270deg, #ffffff, #ffffff99);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-size: 45px;
-        font-weight: bold;
         transition: all 1s ease;
         position: absolute;
         width: 200px;
         z-index: 100;
-        font-family: "Do Hyeon", serif;
-        font-weight: 400;
+        font-family: 'Do Hyeon', serif;
+        font-weight: 600;
         font-style: normal;
       }
 
       #score {
         transition: all 1s ease;
-        margin: 135px 12px;
+        margin: 135px 18px;
         color: #ffffff80;
         font-size: 30px;
         font-weight: bold;
@@ -501,13 +516,13 @@
         margin: 20px;
         border: none;
         border-radius: 15px;
-        background: linear-gradient(45deg, #00000050, #00000070);
+        background: linear-gradient(45deg, #00000030, #00000070);
         color: white;
         animation: 팝창1 1s ease;
         display: flex;
         transition: all 0.5s ease;
         align-items: center;
-        font-family: "Do Hyeon", serif;
+        font-family: 'Do Hyeon', serif;
         font-weight: 400;
         font-style: normal;
       }
@@ -554,6 +569,23 @@
           transform: translateX(-50%) translateY(-100px) scaleY(1);
         }
       }
+
+      #플레이횟수 {
+        width: auto;
+        height: 30px;
+        border-radius: 20px;
+        border: none;
+        background: linear-gradient(90deg, #00000030, #00000070);
+        padding: 5px 15px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #e3e1ee;
+        font-size: 18px;
+      }
     </style>
     <script>
       let W카운터 = 0;
@@ -597,6 +629,10 @@
         value="3"
         max="3"
       ></progress>
+      <div id="플레이횟수">
+        <span style="font-weight: bold">남은횟수</span
+        ><span style="font-size: 10px">⠀</span><span id = 'times'>3</span>
+      </div>
     </div>
     <style>
       @keyframes loaderA {
@@ -792,6 +828,7 @@
         bomb.id = `b${폭탄개수}`;
         bomb.style.left = `${요소기록['#플레이어'].x + 5}px`;
         bomb.style.bottom = `${요소기록['#플레이어'].y + 5}px`;
+        bomb.innerHTML = '!';
         HTML('#월드').appendChild(bomb);
 
         setTimeout(() => {
@@ -804,16 +841,18 @@
           console.error(`대상 ${대상이름}을(를) 찾을 수 없습니다.`);
           return; //이유는 모르겠는데 자꾸 null 됨
         }
-        const 아이템여부 = (아이템.includes('폭탄'));
+        const 아이템여부 = 아이템.includes('폭탄');
+        대상.innerHTML = '';
         대상.style.animation = `${
-          ($admin || 아이템여부) ? '개쩖폭발' : '폭발'
+          $admin || 아이템여부 ? '개쩖폭발' : '폭발'
         } 0.8s ease-out forwards`;
-        if(아이템여부){
-        $admin = false;
-        아이템.splice(
-          아이템.findIndex((i) => i.includes('폭탄')),
-          1
-        );}
+        if (아이템여부) {
+          $admin = false;
+          아이템.splice(
+            아이템.findIndex((i) => i.includes('폭탄')),
+            1
+          );
+        }
         const 폭발확인 = setInterval(() => {
           const 폭발범위 = 대상.getBoundingClientRect();
           for (const key in 요소기록) {
@@ -863,16 +902,32 @@
             ////console.log('dd')
             이동값.x = 0;
             이동값.y = 0;
-            if (입력.includes('a') || 입력.includes('A') || 입력.includes('ArrowLeft')) {
+            if (
+              입력.includes('a') ||
+              입력.includes('A') ||
+              입력.includes('ArrowLeft')
+            ) {
               이동값.x -= 플레이어속도;
             }
-            if (입력.includes('d') || 입력.includes('D') || 입력.includes('ArrowRight')) {
+            if (
+              입력.includes('d') ||
+              입력.includes('D') ||
+              입력.includes('ArrowRight')
+            ) {
               이동값.x += 플레이어속도;
             }
-            if (입력.includes('w') || 입력.includes('W') || 입력.includes('ArrowUp')) {
+            if (
+              입력.includes('w') ||
+              입력.includes('W') ||
+              입력.includes('ArrowUp')
+            ) {
               이동값.y += 플레이어속도;
             }
-            if (입력.includes('s') || 입력.includes('S') || 입력.includes('ArrowDown')) {
+            if (
+              입력.includes('s') ||
+              입력.includes('S') ||
+              입력.includes('ArrowDown')
+            ) {
               이동값.y -= 플레이어속도;
             }
             if (
@@ -891,7 +946,7 @@
             이동('#플레이어', 이동값.x, 이동값.y, 10);
             if (HTML('#아이템') && 터치('#플레이어', '#아이템') && 아이템여부) {
               아이템여부 = false;
-              let 랜 = 랜덤(1, 3)
+              let 랜 = 랜덤(1, 3);
               if (랜 == 1) {
                 아이템.push('폭탄');
                 팝창(
@@ -911,19 +966,14 @@
                 setTimeout(() => {
                   HTML('#플레이어').style.opacity = 1;
                 }, 5000);
-              }
-              else{
+              } else {
                 //아이템.push('가속');
-                팝창(
-                  'https://ifh.cc/g/jJZk6o.png',
-                  '가속',
-                  '5초간 가속돼요!'
-                );
-                플레이어속도*=2;
+                팝창('https://ifh.cc/g/jJZk6o.png', '가속', '5초간 가속돼요!');
+                플레이어속도 *= 2;
                 HTML('#플레이어').style.filter = 'contrast(2)';
                 setTimeout(() => {
                   HTML('#플레이어').style.filter = 'contrast(1)';
-                  플레이어속도/=2;
+                  플레이어속도 /= 2;
                 }, 5000);
               }
               HTML('#아이템').style.opacity = 0;
@@ -1017,6 +1067,10 @@
     </script>
     <!--기본설정-->
     <script>
+      function TRI(){
+        localStorage.setItem('times',3);
+        location.reload()
+      }
       let 스킬 = '';
       function 기본설정() {
         const 월드 = HTML('#월드');
@@ -1028,6 +1082,19 @@
         순간이동('#플레이어', X + 10, Y + 10);
       }
       기본설정();
+      if (localStorage.getItem('times')) {
+        localStorage.setItem(
+          'times',
+          parseInt(localStorage.getItem('times')) - 1
+        );
+      } else {
+        localStorage.setItem('times', 3);
+      }
+      HTML('#times').innerHTML = localStorage.getItem('times');
+      if(HTML('#times').innerHTML<0){
+        알림('플레이 횟수가 남지 않았어요!','한사람에게 제공되는 최대 플레이횟수 3회를 모두 플레이하셨어요!','돌아가기',`끝();`)
+      }
+      else{
       알림(
         '종이비행기 피하기 게임',
         `<div>
@@ -1078,10 +1145,11 @@
               `,
         '시작하기',
         '시작();'
-      );
+      );}
     </script>
     <!--시스템-->
     <script>
+
       function 시작() {
         if (스킬.includes('stren')) {
           플레이어속도 *= 1.2;
@@ -1089,7 +1157,7 @@
           HTML('#score').value = 5;
           체력 = 5;
         }
-        HTML('#score').style.margin = '70px 12px';
+        HTML('#score').style.margin = '74px 18px';
         관리();
       }
     </script>
@@ -1121,6 +1189,10 @@
         return input.replace(/[0-9]/g, (match) => map[match]);
       }
 
+      function 끝(){
+        window.location.href='https://sccm-two.vercel.app';
+      }
+
       function 코드() {
         let result = 'Z1' + 숫자암호화(String(최종점수));
         result += '2';
@@ -1131,7 +1203,9 @@
       let 적카운터 = 0;
       let 레벨 = 1;
       function 적군생성(num) {
-        if (체력 <= 0){return};
+        if (체력 <= 0) {
+          return;
+        }
         const player = HTML('#플레이어');
         const playerRect = player.getBoundingClientRect();
         const world = HTML('#월드');
@@ -1190,13 +1264,17 @@
       let 아이템 = [];
       async function 관리() {
         팝창(
-                  'https://ifh.cc/g/q216WY.png',
-                  '[기본효과과] 5초무적',
-                  '게임을 시작하고 5초간 무적이에요!'
-                );
-            HTML('#플레이어').style.opacity = '0.5';
-            setTimeout(()=>{HTML('#플레이어').style.opacity = '1';},5000);
-            if(스킬.includes('jump')){레벨 = 3};
+          'https://ifh.cc/g/q216WY.png',
+          '[기본효과과] 5초무적',
+          '게임을 시작하고 5초간 무적이에요!'
+        );
+        HTML('#플레이어').style.opacity = '0.5';
+        setTimeout(() => {
+          HTML('#플레이어').style.opacity = '1';
+        }, 5000);
+        if (스킬.includes('jump')) {
+          레벨 = 3;
+        }
         for (let i = 0; i < 30; i++) {
           setTimeout(() => {
             HTML('#stage').innerHTML = 'Stage #' + 레벨;
@@ -1211,7 +1289,7 @@
               적군생성량 = Math.round((적군생성량 *= 8 / 10));
             }
             적군생성(적군생성량);
-            if ((레벨 % 2 == 0) && !HTML('#아이템')) {
+            if (레벨 % 2 == 0 && !HTML('#아이템')) {
               const 월 = HTML('#월드').getBoundingClientRect();
               let x = 월.width / 2 + 랜덤(-400, 400);
               let y = 월.height / 2 + 랜덤(-200, 200);
@@ -1260,7 +1338,9 @@
         }
         최종점수 = 레벨 - 1;
         최종점수 -= count;
-        if(스킬.includes('jump')){최종점수 ++};
+        if (스킬.includes('jump')) {
+          최종점수++;
+        }
         if (최종점수 < 0) {
           최종점수 = 0;
         }
@@ -1278,7 +1358,7 @@
     <div></div><div style = "font-size:12px; margin-top: 5px;">(옆에 배치된 포스트잇에 이 코드를 적고 보상을 받으러 가보세요!)</div>
     `,
           '다시플레이',
-          'location.reload();'
+          'window.alert(`잠깐! 방금 플레이 하신 판에 대하여 보상을 받으시려면, 꼭! 위의 결과코드를 작성해놓으셔야 해요!`);location.reload();'
         );
         HTML('#월드').style.filter = ``;
       }
