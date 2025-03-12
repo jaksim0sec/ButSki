@@ -1124,7 +1124,7 @@
         localStorage.setItem('times', 2);
       }
       HTML('#times').innerHTML = localStorage.getItem('times');
-      if(HTML('#times').innerHTML<-1){
+      if(/*HTML('#times').innerHTML<-1*/false){
         알림('플레이 횟수가 남지 않았어요!','한사람에게 제공되는 최대 플레이횟수 3회를 모두 플레이하셨어요!','돌아가기',`끝();`)
       }
       else{
